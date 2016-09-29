@@ -6,7 +6,6 @@ After forking the repo
 
     git clone github.com/blunderdome/PR-opener.git
     cd pr_opener
-    chmod +x ./script.sh
     ./script.sh from_commit to_commit base_url git_directory
 
 That should look something like this:

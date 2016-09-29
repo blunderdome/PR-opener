@@ -15,7 +15,7 @@ That should look something like this:
 If you set a `base_url` and a `git_directory`, the script will use those as defaults whenever they aren't specified
 
     export REPO_URL=https://github.com/myusername/myproject/pull/
-    export LOCAL_REPO_PATH=/Users/alexanderroy/Documents/NoRedInk/.git
+    export LOCAL_REPO_PATH=/Users/myusername/Documents/programs/myproject.git
     
 The `from_commit` and `to_commit` variables default to `origin/production` and `origin/stagin`, respectively.
 

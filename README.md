@@ -13,7 +13,7 @@ That should look something like this:
 
     ./script.sh origin/production origin/staging https://github.com/myusername/myproject/pull/ ~/Documents/programs/myproject
 
-If you set a base_url and a git_directory, the script will use those as defaults whenever they aren't specified
+If you set a `base_url` and a `git_directory`, the script will use those as defaults whenever they aren't specified
 
     export REPO_URL=https://github.com/myusername/myproject/pull/
     export LOCAL_REPO_PATH=/Users/alexanderroy/Documents/NoRedInk/.git

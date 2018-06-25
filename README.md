@@ -20,6 +20,8 @@ If you set a `base_url` and a `git_directory`, the script will use those as defa
     export REPO_URL=https://github.com/myusername/myproject/pull/
     export LOCAL_REPO_PATH=/Users/myusername/Documents/programs/myproject.git
     
+You can also add these directly to your `bash_profile` (or whatever profile you use).
+    
 The `from_commit` and `to_commit` variables default to `origin/production` and `origin/staging`, respectively.
 
 Warning: running this script may open a lot of new tabs!

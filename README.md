@@ -18,7 +18,7 @@ Example:
 If you set a `base_url` and a `git_directory`, the script will use those as defaults whenever they aren't specified. Example:
 
     export REPO_URL=https://github.com/myusername/myproject/pull/
-    export LOCAL_REPO_PATH=/Users/myusername/Documents/programs/myproject.git
+    export LOCAL_REPO_PATH=/Users/myusername/Documents/programs/myproject/.git
     
 You can also add these directly to your `bash_profile` (or whatever profile you use).
     

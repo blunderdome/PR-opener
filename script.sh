@@ -8,6 +8,7 @@ to_commit=${2:-'origin/staging'}
 base_url=${3:-$REPO_URL}
 git_directory=${4:-$LOCAL_REPO_PATH}
 project_subdirectory=${5:-''}
+since=$(git --git-dir "$git_directory" show -s --format=%ci "$from_commit")
 
 # Works on repos up to 99,999 issues / PRs. If your repo hits 100,000, change to {1,6\}
 pull_request_regex='[#][0-9]\{1,5\}'
@@ -28,7 +29,7 @@ function commit_changed_file_in_subdirectory() {
 }
 
 git --git-dir=$git_directory fetch
-git --git-dir=$git_directory log --oneline $from_commit..$to_commit |
+git --git-dir=$git_directory log --oneline $from_commit..$to_commit --since "$since" |
 grep $pull_request_regex |
 keep_merges_that_change_subdirectory |
 grep -o $pull_request_regex |

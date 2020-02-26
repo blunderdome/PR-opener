@@ -1,5 +1,5 @@
 if [ "$1" == "--help" ]; then
-  echo "Usage: ./script.sh from_commit to_commit base_url git_directory"
+  echo "Usage: ./script.sh from_commit to_commit base_url git_directory project_subdirectory"
   exit 1
 fi
 

@@ -7,7 +7,7 @@ from_commit=${1:-'origin/production'}
 to_commit=${2:-'origin/staging'}
 base_url=${3:-$REPO_URL}
 git_directory=${4:-$LOCAL_REPO_PATH}
-project_subdirectory=${5:-''}
+project_subdirectory=${5:-$SUBDIRECTORY}
 
 # Works on repos up to 99,999 issues / PRs. If your repo hits 100,000, change to {1,6\}
 pull_request_regex='[#][0-9]\{1,5\}'

@@ -44,6 +44,11 @@ pr_numbers=$(
   cut -c 2-
 )
 
+if [ "$pr_numbers" == "" ]; then
+  echo "There were no PRs merged between $from_commit..$to_commit"
+  exit 0
+fi
+
 if [ "$markdown" == "true" ]; then
   echo "Generating markdown..."
   echo "$pr_numbers" |

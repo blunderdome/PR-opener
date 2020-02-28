@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ "$1" == "--help" ]; then
-  echo "Usage: ./script.sh from_commit to_commit base_url git_directory project_subdirectory"
+  printf "Usage:\n./script.sh [--markdown] from_commit to_commit base_url git_directory project_subdirectory\n             --markdown : generates list of PRs and extra info in a markdown checklist and copies it to clipboard\n"
   exit 1
 fi
 if [ "$1" == "--markdown" ]; then

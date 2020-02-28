@@ -1,11 +1,11 @@
 # TODO: think about quote marks
-# TODO: something about installing hub
 
 if [ "$1" == "--help" ]; then
   echo "Usage: ./script.sh from_commit to_commit base_url git_directory project_subdirectory"
   exit 1
 fi
 if [ "$1" == "--markdown" ]; then
+  command -v hub >/dev/null 2>&1 || { echo >&2 "To generate markdown, you need to install hub first by running:\nbrew install hub\nSee https://github.com/github/hub for more information."; exit 1; }
   markdown="true"
   shift
 fi

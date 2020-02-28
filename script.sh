@@ -1,6 +1,13 @@
+# TODO: think about quote marks
+# TODO: something about installing hub
+
 if [ "$1" == "--help" ]; then
   echo "Usage: ./script.sh from_commit to_commit base_url git_directory project_subdirectory"
   exit 1
+fi
+if [ "$1" == "--markdown" ]; then
+  markdown="true"
+  shift
 fi
 
 from_commit=${1:-'origin/production'}
@@ -28,10 +35,24 @@ function commit_changed_file_in_subdirectory() {
 }
 
 git --git-dir=$git_directory fetch
-git --git-dir=$git_directory log --oneline $from_commit..$to_commit |
-grep $pull_request_regex |
-keep_merges_that_change_subdirectory |
-grep -o $pull_request_regex |
-cut -c 2- |
+
+pr_numbers=$(
+  git --git-dir=$git_directory log --oneline $from_commit..$to_commit |
+  grep $pull_request_regex |
+  keep_merges_that_change_subdirectory |
+  grep -o $pull_request_regex |
+  cut -c 2-
+)
+
+if [ "$markdown" == "true" ]; then
+  echo "Generating markdown..."
+  echo "$pr_numbers" |
+  xargs -n 1 hub --git-dir=$LOCAL_REPO_PATH pr show -f "[ ] %i [%t](%U) (%au)" |
+  pbcopy
+  pbpaste
+  echo "Markdown copied to clipboard."
+fi
+
+echo "$pr_numbers" |
 sed -e "s|^|$base_url|" |
 xargs open

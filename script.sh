@@ -1,11 +1,11 @@
-# TODO: think about quote marks
+#!/bin/bash
 
 if [ "$1" == "--help" ]; then
   echo "Usage: ./script.sh from_commit to_commit base_url git_directory project_subdirectory"
   exit 1
 fi
 if [ "$1" == "--markdown" ]; then
-  command -v hub >/dev/null 2>&1 || { echo >&2 "To generate markdown, you need to install hub first by running:\nbrew install hub\nSee https://github.com/github/hub for more information."; exit 1; }
+  command -v hub >/dev/null 2>&1 || { printf >&2 "To generate markdown, you need to install hub first by running:\nbrew install hub\nSee https://github.com/github/hub for more information."; exit 1; }
   markdown="true"
   shift
 fi
@@ -34,13 +34,13 @@ function commit_changed_file_in_subdirectory() {
     grep "^${project_subdirectory}"
 }
 
-git --git-dir=$git_directory fetch
+git --git-dir="$git_directory" fetch
 
 pr_numbers=$(
-  git --git-dir=$git_directory log --oneline $from_commit..$to_commit |
-  grep $pull_request_regex |
+  git --git-dir="$git_directory" log --oneline "$from_commit..$to_commit" |
+  grep "$pull_request_regex" |
   keep_merges_that_change_subdirectory |
-  grep -o $pull_request_regex |
+  grep -o "$pull_request_regex" |
   cut -c 2-
 )
 
@@ -56,7 +56,7 @@ xargs open
 if [ "$markdown" == "true" ]; then
   echo "Generating markdown..."
   echo "$pr_numbers" |
-  xargs -n 1 hub --git-dir=$LOCAL_REPO_PATH pr show -f "[ ] %i [%t](%U) (%au)" |
+  xargs -n 1 hub --git-dir="$LOCAL_REPO_PATH" pr show -f "[ ] %i [%t](%U) (%au)" |
   pbcopy
   pbpaste
   echo "Markdown copied to clipboard."

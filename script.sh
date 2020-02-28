@@ -49,6 +49,10 @@ if [ "$pr_numbers" == "" ]; then
   exit 0
 fi
 
+echo "$pr_numbers" |
+sed -e "s|^|$base_url|" |
+xargs open
+
 if [ "$markdown" == "true" ]; then
   echo "Generating markdown..."
   echo "$pr_numbers" |
@@ -57,7 +61,3 @@ if [ "$markdown" == "true" ]; then
   pbpaste
   echo "Markdown copied to clipboard."
 fi
-
-echo "$pr_numbers" |
-sed -e "s|^|$base_url|" |
-xargs open

@@ -5,7 +5,7 @@ if [ "$1" == "--help" ]; then
   exit 1
 fi
 if [ "$1" == "--markdown" ]; then
-  command -v hub >/dev/null 2>&1 || { printf >&2 "To generate markdown, you need to install hub first by running:\nbrew install hub\nSee https://github.com/github/hub for more information."; exit 1; }
+  command -v hub >/dev/null 2>&1 || { printf >&2 "To generate markdown, you need to install hub first by running:\nbrew install hub\nSee https://github.com/github/hub for more information.\n"; exit 1; }
   markdown="true"
   shift
 fi

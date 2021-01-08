@@ -56,7 +56,7 @@ xargs open
 if [ "$markdown" == "true" ]; then
   echo "Generating markdown..."
   echo "$pr_numbers" |
-  xargs -n 1 hub --git-dir="$LOCAL_REPO_PATH" pr show -f "[ ] %i [%t](%U) (%au)" |
+  xargs -n 1 hub --git-dir="$LOCAL_REPO_PATH" pr show -f "[ ] %i [%t](%U) (%au) %B" |
   pbcopy
   pbpaste
   echo "Markdown copied to clipboard."

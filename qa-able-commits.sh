@@ -12,10 +12,10 @@
 
 # Helpers for color output
 function success() {
-    printf "🟢  \033[0;32m%s\033[0m %s\n" "${1}" "${2}"
+    printf "✅  \033[0;32m%s\033[0m %s\n" "${1}" "${2}"
 }
 function failed() {
-    printf "🔴 \033[0;31m%s\033[0m %s\n" "${1}" "${2}"
+    printf "❌  \033[0;31m%s\033[0m %s\n" "${1}" "${2}"
 }
 function warning() {
     printf "🟠  \033[0;33m%s\033[0m %s\n" "${1}" "${2}"
@@ -86,7 +86,7 @@ do
 done < <(git log ${START_TAG}..${END_TAG} --merges --first-parent --grep="${MATCH_ON}" --format="%h %s" -- monolith) || fail "Unable to read git logs in ${GIT DIRECTORY}"
 
 printf "===== %s ======\n" "$START_TAG"
-printf "🟢  above means that this merge passed our status checks. If there is too much\n"
+printf "✅  above means that this merge passed our status checks. If there is too much\n"
 printf "to QA between the last production deploy and master then one of these commits\n"
 printf "is a good staging deploy candidate.\n"
 printf "Commits at the bottom of this list are closer to production and those at the\n"

@@ -1,5 +1,5 @@
 
-This repository contains two scripts to simplify some common QA git tasks, these are:
+This repository contains two scripts to simplify some common QA git tasks:
 
 1. [script.sh](#scriptsh) - opens pull requests between two commit references
 2. [qa-able-commits.sh](#qa-able-commitssh) - shows merge commits and ci-status checks between two commit references

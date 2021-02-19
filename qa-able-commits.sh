@@ -50,7 +50,13 @@ function fail {
 
 if [ "$1" == "--help" ]; then
   printf "Identifies good commits between production and master if QA load is too high for the day.\n\n"
-  printf "Usage:\n./qa-able-commits.sh [git_directory]\n    Note, <git_directory> defaults to environment variable LOCAL_REPO_PATH (the same as PR Opener).\n"
+  printf "Usage:\n"
+  printf "./qa-able-commits.sh [from_commit] [to_commit] [git_directory] [subdirectory]\n"
+  printf "Note\n"
+  printf "  <from_commit> defaults to 'origin/production'\n"
+  printf "  <to_commit> defaults to 'origin/master'\n"
+  printf "  <git_directory> defaults to environment variable LOCAL_REPO_PATH\n"
+  printf "  <subdirectory> defaults to environment variable SUBDIRECTORY\n"
   exit 1
 fi
 
@@ -64,28 +70,35 @@ then
     fail "hub was not found, maybe install using 'brew install hub'"
 fi
 
-START_TAG=origin/production
-END_TAG=origin/master
-MATCH_ON='^Auto merge of #'
+from_commit=${1:-'origin/production'}
+to_commit=${2:-'origin/master'}
+git_directory=${3:-$LOCAL_REPO_PATH}
+project_subdirectory=${4:-$LOCAL_REPO_SUBDIRECTORY}
+match_on=${5:-${LOCAL_REPO_MATCH_ON:-^Auto merge of #}}
 
-GIT_DIRECTORY=${1:-$LOCAL_REPO_PATH}
+[[ -d "${git_directory/.git}" ]] || fail "Could not find git within directory ${git_directory}"
 
-[[ -d "${GIT_DIRECTORY/.git}" ]] || fail "Could not find git within directory ${GIT_DIRECTORY}"
+if [ -z "$project_subdirectory" ];
+then
+    scope=()
+else
+    scope=(-- "${project_subdirectory}")
+fi
 
 printf "Fetching to ensure up to date..."
-pushd "${GIT_DIRECTORY}" > /dev/null || fail "Unable to find project directory ${GIT_DIRECTORY}"
-git fetch > /dev/null 2>&1 || fail "Failed to 'git fetch' in ${GIT_DIRECTORY}"
+pushd "${git_directory}" > /dev/null || fail "Unable to find project directory ${git_directory}"
+git fetch > /dev/null 2>&1 || fail "Failed to 'git fetch' in ${git_directory}"
 printf " ✅\n"
 printf "Checking commit status...\n"
 
-printf "===== %s ======\n" "${END_TAG}"
+printf "===== %s ======\n" "${to_commit}"
 
 while read -r line
 do
     report_status "${line}"
-done < <(git log ${START_TAG}..${END_TAG} --merges --first-parent --grep="${MATCH_ON}" --format="%h %s" -- monolith) || fail "Unable to read git logs in ${GIT DIRECTORY}"
+done < <(git log "${from_commit}..${to_commit}" --merges --first-parent --grep="${match_on}" --format="%h %s" "${scope[@]}") || fail "Unable to read git logs in ${git_directory}"
 
-printf "===== %s ======\n" "$START_TAG"
+printf "===== %s ======\n" "$from_commit"
 printf "✅  above means that this merge passed our status checks. If there is too much\n"
 printf "to QA between the last production deploy and master then one of these commits\n"
 printf "is a good staging deploy candidate.\n"

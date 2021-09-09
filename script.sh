@@ -10,8 +10,8 @@ if [ "$1" == "--markdown" ]; then
   shift
 fi
 
-from_commit=${1:-'origin/production'}
-to_commit=${2:-'origin/staging'}
+from_commit=${1:-'origin/deployed/monolith/production'}
+to_commit=${2:-'origin/deployed/monolith/staging'}
 base_url=${3:-$REPO_URL}
 git_directory=${4:-$LOCAL_REPO_PATH}
 project_subdirectory=${5:-$SUBDIRECTORY}

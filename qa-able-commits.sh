@@ -53,7 +53,7 @@ if [ "$1" == "--help" ]; then
   printf "Usage:\n"
   printf "./qa-able-commits.sh [from_commit] [to_commit] [git_directory] [subdirectory]\n"
   printf "Note\n"
-  printf "  <from_commit> defaults to 'origin/production'\n"
+  printf "  <from_commit> defaults to 'origin/deployed/monolith/production'\n"
   printf "  <to_commit> defaults to 'origin/master'\n"
   printf "  <git_directory> defaults to environment variable LOCAL_REPO_PATH\n"
   printf "  <subdirectory> defaults to environment variable SUBDIRECTORY\n"
@@ -70,7 +70,7 @@ then
     fail "hub was not found, maybe install using 'brew install hub'"
 fi
 
-from_commit=${1:-'origin/production'}
+from_commit=${1:-'origin/deployed/monolith/production'}
 to_commit=${2:-'origin/master'}
 git_directory=${3:-$LOCAL_REPO_PATH}
 project_subdirectory=${4:-$LOCAL_REPO_SUBDIRECTORY}
